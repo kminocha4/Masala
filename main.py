@@ -84,9 +84,9 @@ async def check_dead_channel():
 
   
 
-@tasks.loop(seconds=60)
+@tasks.loop(seconds=120)
 async def send_check_ins():
-  check_ins=["What is something you are doing today to practice self-care? :smiling_face_with_3_hearts: ","If you are feeling stressed out, try some yoga! :love_you_gesture: ","Go outside, touch some grass. :evergreen_tree:", "Get up and dance for two minutes! :dancer:", "Listen to some good music and share them with some people around you!:musical_note: ", "Reach out to someone! :hugging: (Helpful tip: if you type 'friend name#discriminatorNumber' then I'll send them a check-in from you!) :smile:"]
+  check_ins=["What is something you are doing today to practice self-care? :smiling_face_with_3_hearts: ","If you are feeling stressed out, try some yoga! :love_you_gesture: ","Go outside, touch some grass. :evergreen_tree:", "Get up and dance for two minutes! :dancer:", "Listen to some good music and share them with some people around you!:musical_note: ", "Reach out to someone! :hugging: (Helpful tip: if you type 'friend username' then I'll send them a check-in from you!) :smile:"]
   for j in client.get_all_members():
    # print(j)
     if(j.name!="masala dosA" and j.name!="testbot" and j.name!="masala"):

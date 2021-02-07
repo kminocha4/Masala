@@ -42,7 +42,7 @@ async def change_status():
       print(i)
       if(i.name=="general"):
         channel=client.get_channel(i.id)
-        await channel.send("30 second check-in!")
+        await channel.send("30 second check-in! :eyes:")
     for j in client.get_all_members():
       if j.name=="fisha":
         member=await client.fetch_user(j.id)

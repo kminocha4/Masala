@@ -1,4 +1,3 @@
-
 import discord
 import os
 import requests
@@ -8,8 +7,7 @@ import json
 from dotenv import load_dotenv
 from discord.ext import commands,tasks
 from itertools import cycle
-from datetime import datetime
-import random
+
 
 load_dotenv()
 
@@ -71,14 +69,18 @@ async def check_dead_channel():
       #maya_testing = client.get_channel(807817639559823421)
       #await channel.send("30 second check-in!")
       msg = await channel.history(limit=1).flatten()
+      if (msg[0] == None):
+        return
       timestamp = msg[0].created_at
       current_time = datetime.now()
       difference = current_time - timestamp
       diff_s = difference.total_seconds()
       if msg[0].author == client.user:
-       return
+        return
       if (diff_s > 120):
-        await channel.send('This channel is pretty dead, huh? \n' + get_icebreaker())
+
+        await channel.send('This channel is pretty dead, huh? Time to spice things up a bit :hot_pepper: \n ' + get_icebreaker())
+
 
   
 
@@ -128,6 +130,7 @@ async def on_message(message):
     print(message.content)
   print(arr)
 
+
   if message.content.startswith('!'):
     c1name = message.content[1:]
     c1dash = message.content.find(':')
@@ -149,6 +152,4 @@ async def on_message(message):
       m = await c.create_text_channel(c1chan)
 
     
-
-
 client.run(os.getenv('TOKEN'))

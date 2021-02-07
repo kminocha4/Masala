@@ -1,22 +1,18 @@
-
 import discord
 import os
 import requests
 import json
 
-import random
-from datetime import datetime
-
 
 from dotenv import load_dotenv
 from discord.ext import commands,tasks
 from itertools import cycle
-from datetime import datetime
-import random
+
 
 load_dotenv()
 
 icebreakers = [
+
   "Is lasagna a sandwich?:sandwich:",
   "What are your favorite childhood TV shows?:tv: ",
   "If you could visit any fictional world, where would you go? :map: ",
@@ -29,7 +25,7 @@ icebreakers = [
   "What would the book/movie :book:  of your life story be like? What would it be called? :thinking: ",
   "Toilet paper roll: facing in or out? :roll_of_paper: Discuss.",
   "What is your favorite guilty pleasure TV show? :yum: ",
-  "Tell us about your socks. What is your favorite type of socks? Favorite pair? :socks: ",
+  "Tell us about your socks. What is your favorite type of socks? Favorite pair? :socks: "
 ]
 
 intents = discord.Intents.default()
@@ -73,14 +69,18 @@ async def check_dead_channel():
       #maya_testing = client.get_channel(807817639559823421)
       #await channel.send("30 second check-in!")
       msg = await channel.history(limit=1).flatten()
+      if (msg[0] == None):
+        return
       timestamp = msg[0].created_at
       current_time = datetime.now()
       difference = current_time - timestamp
       diff_s = difference.total_seconds()
       if msg[0].author == client.user:
-       return
+        return
       if (diff_s > 120):
-        await channel.send('This channel is pretty dead, huh? ' + get_icebreaker())
+
+        await channel.send('This channel is pretty dead, huh? Time to spice things up a bit :hot_pepper: \n ' + get_icebreaker())
+
 
   
 
@@ -113,13 +113,13 @@ async def on_message(message):
     return
 
   if message.content.startswith('friend'):
-    f1hash = message.content.find('#')
-    f1username = message.content[7:f1hash]
-    f1userdisc = message.content[f1hash + 1:]
+    f1username = message.content[7:]
     for j in client.get_all_members():
-      if (j.name == f1username and j.discriminator == f1userdisc):
+      if (j.name == f1username):
         member = await client.fetch_user(j.id)
+
         await member.send("Hi "+j.name+ ", your friend, "+message.author.name + " wants to check in with you!:heart: Let "+message.author.name+" know how you are doing :hugging:")
+
   elif message.content.startswith('.feeling'):
     emoji=(str(message.content))[8:]
     if message.author.name in arr:
@@ -130,5 +130,26 @@ async def on_message(message):
     print(message.content)
   print(arr)
 
-client.run(os.getenv('TOKEN'))
 
+  if message.content.startswith('!'):
+    c1name = message.content[1:]
+    c1dash = message.content.find(':')
+    c1category = message.content[1:c1dash]
+    c1chan = message.content[c1dash+1:]
+    for i in client.get_all_channels():
+      if (i.category != None and i.category.name == c1category and i.name == c1chan):
+        x = discord.utils.get(message.guild.roles, name=c1name)
+        x.members.append(message.author)
+        await i.set_permissions(x, read_messages=True, send_messages=True)
+        break
+      elif (i.category != None and (i.category.name == c1category and i.name != c1chan)):
+        m = await i.category.create_text_channel(c1chan)
+        break
+    if (i.category == None or (i.category.name != c1category)):
+      r = await message.guild.create_role(name = c1name)
+      r.members.append(message.author)
+      c = await message.guild.create_category(name = c1category)
+      m = await c.create_text_channel(c1chan)
+
+    
+client.run(os.getenv('TOKEN'))

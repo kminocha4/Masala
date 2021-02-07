@@ -84,7 +84,7 @@ async def check_dead_channel():
 
   
 
-@tasks.loop(seconds=120)
+@tasks.loop(minutes=5)
 async def send_check_ins():
   check_ins=["What is something you are doing today to practice self-care? :smiling_face_with_3_hearts: ","If you are feeling stressed out, try some yoga! :love_you_gesture: ","Go outside, touch some grass. :evergreen_tree:", "Get up and dance for two minutes! :dancer:", "Listen to some good music and share them with some people around you!:musical_note: ", "Reach out to someone! :hugging: (Helpful tip: if you type 'friend username' then I'll send them a check-in from you!) :smile:"]
   for j in client.get_all_members():
@@ -119,7 +119,7 @@ async def on_message(message):
     for j in client.get_all_members():
       if (j.name == f1username and j.discriminator == f1userdisc):
         member = await client.fetch_user(j.id)
-        await member.send("Hi "+j.name+ ", your friend, "+message.author.name + " wants to check in with you!:heart: Let "+message.author.name+" know how you are doing :hug:")
+        await member.send("Hi "+j.name+ ", your friend, "+message.author.name + " wants to check in with you!:heart: Let "+message.author.name+" know how you are doing :hugging:")
   elif message.content.startswith('.feeling'):
     emoji=(str(message.content))[8:]
     if message.author.name in arr:

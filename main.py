@@ -4,6 +4,10 @@ import os
 import requests
 import json
 
+import random
+from datetime import datetime
+
+
 from dotenv import load_dotenv
 from discord.ext import commands,tasks
 from itertools import cycle
@@ -11,6 +15,22 @@ from datetime import datetime
 import random
 
 load_dotenv()
+
+icebreakers = [
+  "Is lasagna a sandwich? Discuss.",
+  "What are your favorite childhood TV shows?",
+  "If you could visit any fictional world, where would you go?",
+  "If you were a vending machine, what would you vend?",
+  "Post your funniest memes. Go!",
+  "Tell your best dad joke.",
+  "If you could have any question answered, what would it be?",
+  "If you could have dinner with anyone - dead or alive - who would you choose?",
+  "Let's play two truths and a lie! I'll start: 1. I can feel emotions. 2. I am 2 days old. 3. My favorite color is blurple.",
+  "What would the book/movie of your life story be like? What would it be called?",
+  "Toilet paper roll: facing in or out? Discuss.",
+  "What is your favorite guilty pleasure TV show?",
+  "Tell us about your socks. What is your favorite type of socks? Favorite pair?",
+]
 
 intents = discord.Intents.default()
 intents.members = True 
@@ -22,11 +42,18 @@ def get_quote():
   quote = json_data[0]['q'] + " -" + json_data[0]['a']
   return(quote)
 
+
+def get_icebreaker():
+  quote = random.choice(icebreakers)
+  return(quote)
+
+
 @client.event
 async def on_ready():
   check_dead_channel.start()
   send_check_ins.start()
   print('BOT IS READY')
+
 
 
 @client.event
@@ -36,27 +63,25 @@ async def on_member_join(member):
         f'Hi {member.name}, welcome to the server! I am Masala Bot :robot:, here to spice up your conversations :hot_pepper:. To get started, help me understand more about you :cowboy:. What are your interests? :art: :performing_arts: :woman_scientist: :french_bread: :musical_note: Let me start! I love spicy food :hot_pepper: :yum: and ballroom dancing :dancer:! Head on over to the roles channel on the server and add your interests!'
     )
 
+
 @tasks.loop(seconds=30)
 async def check_dead_channel():
  
   for i in client.get_all_channels():
-    #print(i)
-    if(i.name=="general"):
-      #channel=client.get_channel(i.id)
-      #await channel.send("30 second check-in! :eyes:")
-      if(i.name=="general"):
-      #channel=client.get_channel(i.id)
-        maya_testing = client.get_channel(807812132003512320)
-        #await channel.send("30 second check-in!")
-        msg = await maya_testing.history(limit=1).flatten()
-        timestamp = msg[0].created_at
-        current_time = datetime.now()
-        difference = current_time - timestamp
-        diff_s = difference.total_seconds()
-        if msg[0].author == client.user:
-          return
-        if (diff_s > 120):
-          await maya_testing.send('This channel is pretty dead, huh?')
+    if(i.type == discord.ChannelType.text):
+      channel=client.get_channel(i.id)
+      #maya_testing = client.get_channel(807817639559823421)
+      #await channel.send("30 second check-in!")
+      msg = await channel.history(limit=1).flatten()
+      timestamp = msg[0].created_at
+      current_time = datetime.now()
+      difference = current_time - timestamp
+      diff_s = difference.total_seconds()
+      if msg[0].author == client.user:
+       return
+      if (diff_s > 120):
+        await channel.send('This channel is pretty dead, huh? ' + get_icebreaker())
+
   
 
 @tasks.loop(seconds=60)
@@ -106,3 +131,4 @@ async def on_message(message):
   print(arr)
 
 client.run(os.getenv('TOKEN'))
+

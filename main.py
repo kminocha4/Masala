@@ -37,19 +37,19 @@ async def check_In(ctx):
 
 @tasks.loop(seconds=30)
 async def change_status():
-  await client.change_presence(activity=discord.Game(next(status)))
-  try:
-    for i in client.get_all_channels():
-      print(i)
-      if(i.name=="general"):
-        channel=client.get_channel(i.id)
-        await channel.send("30 second check-in! :eyes:")
-    for j in client.get_all_members():
-      if j.name=="fisha":
-        member=await client.fetch_user(j.id)
-        await member.send("60 second check-in")
-  except:
-    print("You probably need a new token!")
+ # try:
+  for i in client.get_all_channels():
+    print(i)
+    if(i.name=="general"):
+      channel=client.get_channel(i.id)
+      await channel.send("30 second check-in! :eyes:")
+  for j in client.get_all_members():
+    print(j)
+    if(j.name!="masala dosA" and j.name!="testbot" and j.name!="masala"):
+      member=await client.fetch_user(j.id)
+      await member.send("ISHA'S CHECK-IN :eyes:")
+  #except:
+  #  print("You probably need a new token! :eyes:")
 
 
 @client.event

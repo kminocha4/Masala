@@ -42,24 +42,24 @@ async def check_In(ctx):
 async def change_status():
  # try:
   for i in client.get_all_channels():
+    print(i)
+    if(i.name=="general"):
       #channel=client.get_channel(i.id)
       #await channel.send("30 second check-in! :eyes:")
-    if(i.name=="general"):
-    #channel=client.get_channel(i.id)
-      maya_testing = client.get_channel(807812132003512320)
-      #await channel.send("30 second check-in!")
-      msg = await maya_testing.history(limit=1).flatten()
-      timestamp = msg[0].created_at
-      current_time = datetime.now()
-      difference = current_time - timestamp
-      diff_s = difference.total_seconds()
-      if msg[0].author == client.user:
-        return
-      if (diff_s > 120):
-        await maya_testing.send('This channel is pretty dead, huh?')
+      if(i.name=="general"):
+      #channel=client.get_channel(i.id)
+        maya_testing = client.get_channel(807812132003512320)
+        #await channel.send("30 second check-in!")
+        msg = await maya_testing.history(limit=1).flatten()
+        timestamp = msg[0].created_at
+        current_time = datetime.now()
+        difference = current_time - timestamp
+        diff_s = difference.total_seconds()
+        if msg[0].author == client.user:
+          return
+        if (diff_s > 120):
+          await maya_testing.send('This channel is pretty dead, huh?')
 
-
-  
   for j in client.get_all_members():
     print(j)
     if(j.name!="masala dosA" and j.name!="testbot" and j.name!="masala"):
@@ -67,7 +67,6 @@ async def change_status():
       await member.send("ISHA'S CHECK-IN :eyes:")
   #except:
   #  print("You probably need a new token! :eyes:")
-
 
 
 @client.event
@@ -93,6 +92,5 @@ async def on_message(message):
       if (j.name == f1username and j.discriminator == f1userdisc):
         member = await client.fetch_user(j.id)
         await member.send(message.author.name + " wants to check in with you!")
-
 
 client.run(os.getenv('TOKEN'))

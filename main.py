@@ -31,27 +31,23 @@ async def check_In(ctx):
   
   await ctx.author.send('Checking In!')
  
-@client.command()
-async def dm(ctx,user: discord.User,*,args=None):
-  await user.send("hi")
+
 
 
 @tasks.loop(seconds=30)
 async def change_status():
   await client.change_presence(activity=discord.Game(next(status)))
-  
-  for i in client.get_all_channels():
-    print(i)
-    if(i.name=="general"):
-      channel=client.get_channel(i.id)
-      await channel.send("30 second message")
-  
-  for j in client.get_all_members():
-    if j.name=="fisha":
-      break
-    
-  #channel = client.get_channel(os.getenv('GUILD_ID'))
-  #channel.send("Message")
+  try:
+    for i in client.get_all_channels():
+      print(i)
+      if(i.name=="general"):
+        channel=client.get_channel(i.id)
+        await channel.send("30 second check-in!")
+    for j in client.get_all_members():
+      if j.name=="fisha":
+        member=await client.fetch_user(j.id)
+        await member.send("60 second check-in")
+  except:
+    print("You probably need a new token!")
 
 client.run(os.getenv("TOKEN"))
-#client.run(os.getenv('TOKEN'))

@@ -4,9 +4,6 @@ import os
 import requests
 import json
 
-import random
-from datetime import datetime
-
 
 from dotenv import load_dotenv
 from discord.ext import commands,tasks
@@ -80,7 +77,7 @@ async def check_dead_channel():
       if msg[0].author == client.user:
        return
       if (diff_s > 120):
-        await channel.send('This channel is pretty dead, huh? ' + get_icebreaker())
+        await channel.send('This channel is pretty dead, huh? \n' + get_icebreaker())
 
   
 

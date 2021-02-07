@@ -14,19 +14,19 @@ import random
 load_dotenv()
 
 icebreakers = [
-  "Is lasagna a sandwich? Discuss.",
-  "What are your favorite childhood TV shows?",
-  "If you could visit any fictional world, where would you go?",
-  "If you were a vending machine, what would you vend?",
-  "Post your funniest memes. Go!",
-  "Tell your best dad joke.",
-  "If you could have any question answered, what would it be?",
-  "If you could have dinner with anyone - dead or alive - who would you choose?",
-  "Let's play two truths and a lie! I'll start: 1. I can feel emotions. 2. I am 2 days old. 3. My favorite color is blurple.",
-  "What would the book/movie of your life story be like? What would it be called?",
-  "Toilet paper roll: facing in or out? Discuss.",
-  "What is your favorite guilty pleasure TV show?",
-  "Tell us about your socks. What is your favorite type of socks? Favorite pair?",
+  "Is lasagna a sandwich?:sandwich:",
+  "What are your favorite childhood TV shows?:tv: ",
+  "If you could visit any fictional world, where would you go? :map: ",
+  "If you were a vending machine, what would you vend? :beverage_box: ",
+  "Post your funniest memes. :yum:  Go!",
+  "Tell your best dad joke. :laughing: ",
+  "If you could have any question answered, what would it be:question: ",
+  "If you could have dinner with anyone - dead or alive - who would you choose? I don't count! :rofl: ",
+  "Let's play two truths and a lie! :stuck_out_tongue_closed_eyes:  I'll start: 1. I can feel emotions. 2. I am 2 days old. 3. My favorite color is blurple.",
+  "What would the book/movie :book:  of your life story be like? What would it be called? :thinking: ",
+  "Toilet paper roll: facing in or out? :roll_of_paper: Discuss.",
+  "What is your favorite guilty pleasure TV show? :yum: ",
+  "Tell us about your socks. What is your favorite type of socks? Favorite pair? :socks: ",
 ]
 
 intents = discord.Intents.default()
@@ -116,7 +116,7 @@ async def on_message(message):
     for j in client.get_all_members():
       if (j.name == f1username and j.discriminator == f1userdisc):
         member = await client.fetch_user(j.id)
-        await member.send(message.author.name + " wants to check in with you!")
+        await member.send("Hi "+j.name+ ", your friend, "+message.author.name + " wants to check in with you!:heart: Let "+message.author.name+" know how you are doing :hug:")
   elif message.content.startswith('.feeling'):
     emoji=(str(message.content))[8:]
     if message.author.name in arr:

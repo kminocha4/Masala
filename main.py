@@ -1,3 +1,4 @@
+
 import discord
 import os
 import requests
@@ -103,4 +104,5 @@ async def on_message(message):
     await message.author.send("Thanks for sharing! Checkout your emojis from all your check-ins!:\n"+arr[message.author.name])
     print(message.content)
   print(arr)
+
 client.run(os.getenv('TOKEN'))

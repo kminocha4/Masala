@@ -6,6 +6,9 @@ import json
 from dotenv import load_dotenv
 from discord.ext import commands,tasks
 from itertools import cycle
+from datetime import datetime
+
+
 load_dotenv()
 
 intents = discord.Intents.default()
@@ -41,8 +44,22 @@ async def change_status():
   for i in client.get_all_channels():
     print(i)
     if(i.name=="general"):
-      channel=client.get_channel(i.id)
-      await channel.send("30 second check-in! :eyes:")
+      #channel=client.get_channel(i.id)
+      #await channel.send("30 second check-in! :eyes:")
+      if(i.name=="general"):
+      #channel=client.get_channel(i.id)
+        maya_testing = client.get_channel(807812132003512320)
+        #await channel.send("30 second check-in!")
+        msg = await maya_testing.history(limit=1).flatten()
+        timestamp = msg[0].created_at
+        current_time = datetime.now()
+        difference = current_time - timestamp
+        diff_s = difference.total_seconds()
+        if msg[0].author == client.user:
+          return
+        if (diff_s > 120):
+          await maya_testing.send('This channel is pretty dead, huh?')
+
   for j in client.get_all_members():
     print(j)
     if(j.name!="masala dosA" and j.name!="testbot" and j.name!="masala"):

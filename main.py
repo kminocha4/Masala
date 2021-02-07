@@ -3,6 +3,7 @@ import os
 import requests
 import json
 
+
 from dotenv import load_dotenv
 from discord.ext import commands,tasks
 from itertools import cycle
@@ -51,3 +52,4 @@ async def change_status():
     print("You probably need a new token!")
 
 client.run(os.getenv("TOKEN"))
+

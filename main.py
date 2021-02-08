@@ -7,7 +7,7 @@ import json
 from dotenv import load_dotenv
 from discord.ext import commands,tasks
 from itertools import cycle
-
+import random
 
 load_dotenv()
 

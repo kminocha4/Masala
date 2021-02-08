@@ -10,7 +10,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 from discord.ext import commands,tasks
 from itertools import cycle
-
+import random
 
 load_dotenv()
 
@@ -61,7 +61,7 @@ async def on_ready():
 async def on_member_join(member):
     await member.create_dm()
     await member.dm_channel.send(
-        f'Hi {member.name}, welcome to the server! I am Masala Bot :robot:, here to spice up your conversations :hot_pepper:. To get started, help me understand more about you :cowboy:. What are your interests? :art: :performing_arts: :woman_scientist: :french_bread: :musical_note: Let me start! I love spicy food :hot_pepper: :yum: and ballroom dancing :dancer:! Head on over to the roles channel on the server and add your interests!'
+        f'Hi {member.name}, welcome to the server! I am Masala Bot :robot:, here to spice up your conversations :hot_pepper:. To get started, help me understand more about you :cowboy:. What are your interests? :art: :performing_arts: :woman_scientist: :french_bread: :musical_note: Let me start! I love spicy food :hot_pepper: :yum: and ballroom dancing :dancer:! Head on over to the bot stuff channel on the server and add your interests by doing !<category>:<name of activity>. For example, you can make !art:dance.:dancer: If you want to send a check-in to someone, use friend <username>. Have fun!!:partying_face: '
     )
 
 
@@ -137,4 +137,23 @@ async def on_message(message):
     print(message.content)
   print(arr)
 
+  if message.content.startswith('!'):
+    c1name = message.content[1:]
+    c1dash = message.content.find(':')
+    c1category = message.content[1:c1dash]
+    c1chan = message.content[c1dash+1:]
+    for i in client.get_all_channels():
+      if (i.category != None and i.category.name == c1category and i.name == c1chan):
+        x = discord.utils.get(message.guild.roles, name=c1name)
+        x.members.append(message.author)
+        await i.set_permissions(x, read_messages=True, send_messages=True)
+        break
+      elif (i.category != None and (i.category.name == c1category and i.name != c1chan)):
+        m = await i.category.create_text_channel(c1chan)
+        break
+    if (i.category == None or (i.category.name != c1category)):
+      r = await message.guild.create_role(name = c1name)
+      r.members.append(message.author)
+      c = await message.guild.create_category(name = c1category)
+      m = await c.create_text_channel(c1chan)
 client.run(os.getenv('TOKEN'))

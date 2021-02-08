@@ -137,4 +137,4 @@ async def on_message(message):
     print(message.content)
   print(arr)
 
-client.run('ODA3NzA0NzAwMzU4NzU0MzQ0.YB73ng.tHht1EPNPOCAgrkeqpergupI5Wc')
+client.run(os.getenv('TOKEN'))

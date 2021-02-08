@@ -61,7 +61,7 @@ async def on_ready():
 async def on_member_join(member):
     await member.create_dm()
     await member.dm_channel.send(
-        f'Hi {member.name}, welcome to the server! I am Masala Bot :robot:, here to spice up your conversations :hot_pepper:. To get started, help me understand more about you :cowboy:. What are your interests? :art: :performing_arts: :woman_scientist: :french_bread: :musical_note: Let me start! I love spicy food :hot_pepper: :yum: and ballroom dancing :dancer:! Head on over to the bot stuff channel on the server and add your interests by doing !<category>:<name of activity>. For example, you can make !art:dance'
+        f'Hi {member.name}, welcome to the server! I am Masala Bot :robot:, here to spice up your conversations :hot_pepper:. To get started, help me understand more about you :cowboy:. What are your interests? :art: :performing_arts: :woman_scientist: :french_bread: :musical_note: Let me start! I love spicy food :hot_pepper: :yum: and ballroom dancing :dancer:! Head on over to the bot stuff channel on the server and add your interests by doing !<category>:<name of activity>. For example, you can make !art:dance.:dancer: If you want to send a check-in to someone, use friend <username>. Have fun!!:partying_face: '
     )
 
 
